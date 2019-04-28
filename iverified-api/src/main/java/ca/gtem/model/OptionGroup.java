@@ -89,7 +89,22 @@ public class OptionGroup {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	/**
+	 * @return the options
+	 */
+	public Set<Option> getOptions() {
+		return options;
+	}
+
+	/**
+	 * @param options the options to set
+	 */
+	public void setOptions(Set<Option> options) {
+		this.options = options;
+	}
     
+	
     
 
 }

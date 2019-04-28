@@ -6,7 +6,6 @@ import javax.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -91,6 +90,34 @@ public class Option {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the productOption
+	 */
+	public Set<ProductOption> getProductOption() {
+		return productOption;
+	}
+
+	/**
+	 * @param productOption the productOption to set
+	 */
+	public void setProductOption(Set<ProductOption> productOption) {
+		this.productOption = productOption;
+	}
+
+	/**
+	 * @return the optionGroup
+	 */
+	public OptionGroup getOptionGroup() {
+		return optionGroup;
+	}
+
+	/**
+	 * @param optionGroup the optionGroup to set
+	 */
+	public void setOptionGroup(OptionGroup optionGroup) {
+		this.optionGroup = optionGroup;
 	}
     
     

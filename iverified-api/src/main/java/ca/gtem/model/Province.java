@@ -4,7 +4,14 @@ import lombok.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,7 +20,6 @@ import java.util.Set;
   
 
 @Entity
-
 public class Province {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,16 +33,12 @@ public class Province {
     
     @NonNull           
 	private String name;
-    
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "province")
-    private Set<City> cities = new HashSet<>();
-    
-    @ManyToOne(fetch = FetchType.LAZY)
+            
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "country_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Country country;
-
+    
 	/**
 	 * @return the id
 	 */
@@ -91,6 +93,20 @@ public class Province {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the country
+	 */
+	public Country getCountry() {
+		return country;
+	}
+
+	/**
+	 * @param country the country to set
+	 */
+	public void setCountry(Country country) {
+		this.country = country;
 	}
     
     

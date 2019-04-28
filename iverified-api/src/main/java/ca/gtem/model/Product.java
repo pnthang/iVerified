@@ -4,16 +4,17 @@ import javax.validation.constraints.NotNull;
 import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
+import com.google.zxing.WriterException;
+
+import java.io.IOException;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-  
 
 @Entity
-
+@Component
 public class Product {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,36 +29,47 @@ public class Product {
     @NotNull           
 	private String name;
     
-    @NotNull           
+    private Date productionDate;
+    
+    private Date expirationDate;
+    
+    private String address;
+	
+	private String postcode;	
+    
 	private String sku;
     
     private String shortDescription;
     
-    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String longDescription;
     
     private String thumbnailImages;
     
     private String largeImage;
     
-    private String qrCodeImage;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_sub_category_id", nullable = false)
-    private ProductSubCategory productSubCategory;    
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seller_id", nullable = false)
-    private Seller seller;
+    private String qrCodeImage;    
     
     private double latitude;
     
     private double longitude;
     
     private boolean status;
-	/**
-	 * @return the id
-	 */
+    
+    private String hash;
+    
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_category_id", nullable = false)
+    private ProductCategory productCategory;    
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "producer_id", nullable = false)
+    private Producer producer;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id", nullable = false)
+    private City city;
+	
 	public Long getId() {
 		return id;
 	}
@@ -112,6 +124,76 @@ public class Product {
 	}
 
 	/**
+	 * @return the productionDate
+	 */
+	public Date getProductionDate() {
+		return productionDate;
+	}
+
+	/**
+	 * @param productionDate the productionDate to set
+	 */
+	public void setProductionDate(Date productionDate) {
+		this.productionDate = productionDate;
+	}
+
+	/**
+	 * @return the expirationDate
+	 */
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	/**
+	 * @param expirationDate the expirationDate to set
+	 */
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+
+	/**
+	 * @return the address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	/**
+	 * @return the postcode
+	 */
+	public String getPostcode() {
+		return postcode;
+	}
+
+	/**
+	 * @param postcode the postcode to set
+	 */
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
+
+	/**
+	 * @return the sku
+	 */
+	public String getSku() {
+		return sku;
+	}
+
+	/**
+	 * @param sku the sku to set
+	 */
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+
+	/**
 	 * @return the shortDescription
 	 */
 	public String getShortDescription() {
@@ -156,34 +238,6 @@ public class Product {
 	/**
 	 * @return the largeImage
 	 */
-	public String getImage() {
-		return largeImage;
-	}
-
-	/**
-	 * @param largeImage the largeImage to set
-	 */
-	public void setImage(String largeImage) {
-		this.largeImage = largeImage;
-	}
-
-	/**
-	 * @return the sku
-	 */
-	public String getSku() {
-		return sku;
-	}
-
-	/**
-	 * @param sku the sku to set
-	 */
-	public void setSku(String sku) {
-		this.sku = sku;
-	}
-
-	/**
-	 * @return the largeImage
-	 */
 	public String getLargeImage() {
 		return largeImage;
 	}
@@ -210,20 +264,6 @@ public class Product {
 	}
 
 	/**
-	 * @return the productSubCategory
-	 */
-	public ProductSubCategory getProductSubCategory() {
-		return productSubCategory;
-	}
-
-	/**
-	 * @param productSubCategory the productSubCategory to set
-	 */
-	public void setProductSubCategory(ProductSubCategory productSubCategory) {
-		this.productSubCategory = productSubCategory;
-	}
-
-	/**
 	 * @return the latitude
 	 */
 	public double getLatitude() {
@@ -238,7 +278,7 @@ public class Product {
 	}
 
 	/**
-	 * @return the longtitude
+	 * @return the longitude
 	 */
 	public double getLongitude() {
 		return longitude;
@@ -247,7 +287,7 @@ public class Product {
 	/**
 	 * @param longitude the longitude to set
 	 */
-	public void setLongitude(double longtitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
@@ -265,6 +305,58 @@ public class Product {
 		this.status = status;
 	}
 
-	
+	/**
+	 * @return the productSubCategory
+	 */
+	public ProductCategory getProductCategory() {
+		return productCategory;
+	}
 
+	/**
+	 * @param productSubCategory the productSubCategory to set
+	 */
+	public void setProductCategory(ProductCategory productCategory) {
+		this.productCategory = productCategory;
+	}
+
+	/**
+	 * @return the producer
+	 */
+	public Producer getProducer() {
+		return producer;
+	}
+
+	/**
+	 * @param producer the producer to set
+	 */
+	public void setProducer(Producer producer) {
+		this.producer = producer;
+	}
+
+	/**
+	 * @return the city
+	 */
+	public City getCity() {
+		return city;
+	}
+
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(City city) {
+		this.city = city;
+	}
+	
+	 /**
+		 * @return the hash
+		 */
+		public String getHash() {
+			return hash;
+		}
+		/**
+		 * @param hash the hash to set
+		 */
+		public void setHash(String hash) {
+			this.hash = hash;
+		}
 }

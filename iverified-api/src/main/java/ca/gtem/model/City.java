@@ -5,6 +5,9 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
 
@@ -24,8 +27,9 @@ public class City {
 	private String name;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "province_id", nullable = false)
+    @JoinColumn(name = "province_id", nullable = false)    
     private Province province;
+	
 
 	/**
 	 * @return the id
@@ -81,6 +85,20 @@ public class City {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the province
+	 */
+	public Province getProvince() {
+		return province;
+	}
+
+	/**
+	 * @param province the province to set
+	 */
+	public void setProvince(Province province) {
+		this.province = province;
 	}
     
     

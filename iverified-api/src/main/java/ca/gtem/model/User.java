@@ -1,8 +1,9 @@
 package ca.gtem.model;
 
-import lombok.*;
+import javax.validation.constraints.NotNull;
 import javax.persistence.*;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,7 +12,6 @@ import java.util.Date;
   
 
 @Entity
-
 public class User {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,23 +23,23 @@ public class User {
     @UpdateTimestamp
     private Date updatedAt;
     
-    @NonNull           
+    @NotNull           
 	private String firstname;
     
-    @NonNull	
+    @NotNull	
     private String lastname;
 	
-    @NonNull
+    @NotNull
 	private String username;
 	
-    @NonNull
+    @NotNull
 	private String password;
 		
-    private String image;
+    private String profileImage;
 	
 	private String verificationCode;
 	
-	@NonNull
+	@NotNull
 	private String email;
 	
 	private boolean	emailVerified;
@@ -48,13 +48,10 @@ public class User {
 	
 	private boolean phoneVerified;
 	
-	private String address;
-	
-	private String postcode;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id", nullable = false)
-    private City city;
+    @JoinColumn(name = "role_id", nullable = true)
+	@ColumnDefault("1")
+    private Role role;
 
 	/**
 	 * @return the id
@@ -157,15 +154,15 @@ public class User {
 	/**
 	 * @return the image
 	 */
-	public String getImage() {
-		return image;
+	public String getProfileImage() {
+		return profileImage;
 	}
 
 	/**
 	 * @param image the image to set
 	 */
-	public void setImage(String image) {
-		this.image = image;
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 
 	/**
@@ -239,31 +236,17 @@ public class User {
 	}
 
 	/**
-	 * @return the address
+	 * @return the userRole
 	 */
-	public String getAddress() {
-		return address;
+	public Role getRole() {
+		return role;
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param userRole the userRole to set
 	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	/**
-	 * @return the postcode
-	 */
-	public String getPostcode() {
-		return postcode;
-	}
-
-	/**
-	 * @param postcode the postcode to set
-	 */
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	

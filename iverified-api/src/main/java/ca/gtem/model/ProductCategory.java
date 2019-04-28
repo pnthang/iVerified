@@ -1,19 +1,18 @@
 package ca.gtem.model;
 
-import javax.validation.constraints.NotNull;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-  
 
 @Entity
-
 public class ProductCategory {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +24,9 @@ public class ProductCategory {
     @UpdateTimestamp
     private Date updatedAt;
     
-    @NotNull           
+    @NotNull
 	private String name;
     
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "productCategory")
-    private Set<ProductSubCategory> productSubCategory = new HashSet<>();
-
 	/**
 	 * @return the id
 	 */
@@ -88,7 +82,6 @@ public class ProductCategory {
 	public void setName(String name) {
 		this.name = name;
 	}
-    
     
 
 }

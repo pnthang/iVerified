@@ -7,6 +7,10 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,7 +18,6 @@ import java.util.Set;
   
 
 @Entity
-
 public class Country {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +32,8 @@ public class Country {
     @NotNull           
 	private String name;
     
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "country")
-    private Set<Province> provinces = new HashSet<>();
-
+           
+    	
 	/**
 	 * @return the id
 	 */
@@ -90,6 +90,4 @@ public class Country {
 		this.name = name;
 	}
     
-    
-
 }

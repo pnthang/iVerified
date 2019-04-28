@@ -30,8 +30,8 @@ public class Transportation {
     private String image;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "transportor_id", nullable = false)
-    private Transportor transportor;
+    @JoinColumn(name = "transporter_id", nullable = false)
+    private Transporter transporter;
 
 	/**
 	 * @return the id
@@ -88,7 +88,50 @@ public class Transportation {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the image
+	 */
+	public String getImage() {
+		return image;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	/**
+	 * @return the transporter
+	 */
+	public Transporter getTransporter() {
+		return transporter;
+	}
+
+	/**
+	 * @param transportor the transporter to set
+	 */
+	public void setTransportor(Transporter transporter) {
+		this.transporter = transporter;
+	}
     
+	
     
 
 }
