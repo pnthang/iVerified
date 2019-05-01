@@ -33,21 +33,21 @@ public class Application {
     
     
  // Fix the CORS errors
-    @Bean
-    public FilterRegistrationBean simpleCorsFilter() {  
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();  
-        CorsConfiguration config = new CorsConfiguration();  
-        config.setAllowedOrigins(Arrays.asList("*"));
-        config.setAllowCredentials(true);
-        config.setAllowedHeaders(Arrays.asList("Access- Control-Allow-Headers","Access-Control-Allow-Origin","Access-Control-Request-Method", "Access-Control-Request-Headers","Origin","Cache-Control", "Content-Type", "Authorization"));
-        config.setAllowedMethods(Arrays.asList("DELETE", "GET", "POST", "PATCH", "PUT"));                       
+    //@Bean
+    //public FilterRegistrationBean simpleCorsFilter() {  
+     //   UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();  
+     //   CorsConfiguration config = new CorsConfiguration();  
+     //   config.setAllowedOrigins(Arrays.asList("*"));
+     //   config.setAllowCredentials(true);
+     //   config.setAllowedHeaders(Arrays.asList("Access- Control-Allow-Headers","Access-Control-Allow-Origin","Access-Control-Request-Method", "Access-Control-Request-Headers","Origin","Cache-Control", "Content-Type", "Authorization"));
+     //   config.setAllowedMethods(Arrays.asList("DELETE", "GET", "POST", "PATCH", "PUT"));                       
         // *** URL below needs to match the client URL and port ***
         //config.setAllowedOrigins(Collections.singletonList("*")); 
         //config.setAllowedMethods(Collections.singletonList("*"));  
         //config.setAllowedHeaders(Collections.singletonList("*"));  
-        source.registerCorsConfiguration("/**", config);  
-        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);  
-        return bean;  
-    } 
+     //   source.registerCorsConfiguration("/**", config);  
+     //   FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+     //   bean.setOrder(Ordered.HIGHEST_PRECEDENCE);  
+     //   return bean;  
+    //} 
 }

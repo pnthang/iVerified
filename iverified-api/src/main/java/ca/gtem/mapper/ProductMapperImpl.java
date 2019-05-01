@@ -85,7 +85,7 @@ public class ProductMapperImpl implements ProductMapper {
 		product.setLongitude(productDto.getLongitude());
 		product.setProductionDate(productDto.getProductionDate());
 		product.setExpirationDate(productDto.getExpirationDate());
-		product.setSku(productDto.getSku());
+		product.setSku(productDto.getSku().toUpperCase());
 		product.setAddress(productDto.getAddress());
 		product.setPostcode(productDto.getPostcode());
 		if (productDto.getCity()!=null) {
@@ -101,16 +101,12 @@ public class ProductMapperImpl implements ProductMapper {
 		productDto.setHash(StringUtil.createHash(productDto.getName()));
 		product.setHash(productDto.getHash());
 		
-		if (productDto.getQrCodeImage()!="") {
-			product.setQrCodeImage(QRCodeGenerator.createQrCode(productDto.getName(),
+		product.setQrCodeImage(QRCodeGenerator.createQrCode(productDto.getName(),
 					domain,
 					productDto.getHash(),
 					rootDir,
 					qrimageDir
-			));	
-		}else {
-			product.setQrCodeImage(productDto.getQrCodeImage());
-		}
+			));			
 				
 		return product;
 	}

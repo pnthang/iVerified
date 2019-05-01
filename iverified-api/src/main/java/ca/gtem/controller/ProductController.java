@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -65,13 +66,30 @@ public class ProductController {
 	}
 	
 	@GetMapping("/product/sku/{sku}")	
-	public Product findBySku(@PathVariable("sku") String sku) {
-		return productRepository.findBySku(sku);
+	public ResponseEntity<Product> findBySku(@PathVariable("sku") String sku) {
+		HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");  
+        Product product = productRepository.findBySku(sku.toUpperCase()); 
+        if (product!=null) {
+        	return  new ResponseEntity<>(product, headers, HttpStatus.OK);
+        }else {
+        	product = new Product();
+        	return  new ResponseEntity<>(product, headers, HttpStatus.valueOf("NotFound"));
+        }
+        	
 	}
 	
 	@GetMapping("/product/code/{hash}")	
-	public Product findByHash(@PathVariable("hash") String hash) {
-		return productRepository.findByHash(hash);
+	public ResponseEntity<Product> findByHash(@PathVariable("hash") String hash) {
+		HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");  
+        Product product = productRepository.findByHash(hash); 
+        if (product!=null) {
+        	return  new ResponseEntity<>(product, headers, HttpStatus.OK);
+        }else {
+        	product = new Product();
+        	return  new ResponseEntity<>(product, headers, HttpStatus.valueOf("NotFound"));
+        }		
 	}
 	
 	@PostMapping("/product")	
