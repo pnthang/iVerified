@@ -12,6 +12,9 @@ public class ImageUtil {
 			
 	public static String storeImage(String fileName, String rootDir,String destinationDir) {			
 		
+		  if (fileName.contains("/")) {
+			  return fileName;
+		  }
 	      try
 	      {	        
 	         Path sourceFile = Paths.get(rootDir + "/tmp/" + fileName );	 
