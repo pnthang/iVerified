@@ -15,6 +15,7 @@ public class ImageUtil {
 		  if (fileName.contains("/")) {
 			  return fileName;
 		  }
+		  fileName = fileName.replace(" ", "");
 	      try
 	      {	        
 	         Path sourceFile = Paths.get(rootDir + "/tmp/" + fileName );	 

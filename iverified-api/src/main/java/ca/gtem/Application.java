@@ -12,6 +12,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
@@ -30,16 +31,20 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }        
     
+    
  // Fix the CORS errors
     @Bean
     public FilterRegistrationBean simpleCorsFilter() {  
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();  
         CorsConfiguration config = new CorsConfiguration();  
-        config.setAllowCredentials(true); 
+        config.setAllowedOrigins(Arrays.asList("*"));
+        config.setAllowCredentials(true);
+        config.setAllowedHeaders(Arrays.asList("Access- Control-Allow-Headers","Access-Control-Allow-Origin","Access-Control-Request-Method", "Access-Control-Request-Headers","Origin","Cache-Control", "Content-Type", "Authorization"));
+        config.setAllowedMethods(Arrays.asList("DELETE", "GET", "POST", "PATCH", "PUT"));                       
         // *** URL below needs to match the client URL and port ***
-        config.setAllowedOrigins(Collections.singletonList("*")); 
-        config.setAllowedMethods(Collections.singletonList("*"));  
-        config.setAllowedHeaders(Collections.singletonList("*"));  
+        //config.setAllowedOrigins(Collections.singletonList("*")); 
+        //config.setAllowedMethods(Collections.singletonList("*"));  
+        //config.setAllowedHeaders(Collections.singletonList("*"));  
         source.registerCorsConfiguration("/**", config);  
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);  

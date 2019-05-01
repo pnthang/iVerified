@@ -25,7 +25,8 @@ public class QRCodeGenerator {
         }
 	
 	// Create qr Image from hash string and return uri to location
-	public static String createQrCode(String fileName,String domain, String hash, String rootDir, String qrimageDir) {		
+	public static String createQrCode(String fileName,String domain, String hash, String rootDir, String qrimageDir) {
+		fileName = fileName.replace(" ", "_");
 		Path destinationPath = Paths.get(rootDir + qrimageDir );		
 		String qrCodeImagePath = destinationPath + "/"+ fileName + Long.toString(new Date().getTime()) + ".png"; 
 		String qrUrl=qrimageDir + fileName + Long.toString(new Date().getTime()) + ".png"; 
