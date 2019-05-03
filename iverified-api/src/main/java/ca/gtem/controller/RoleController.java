@@ -42,8 +42,8 @@ private final RoleRepository roleRepository;
 	}
 	
 	@PostMapping("/role")
-	public Role create(@RequestBody Role country) {		
-		return roleRepository.save(country);		
+	public Role create(@RequestBody Role role) {		
+		return roleRepository.save(role);		
 	}
 	
 	@DeleteMapping("/role/{id}")
